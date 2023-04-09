@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  회원가입
+{% endblock %}
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    {{form.as_table}}
+
+    <input type="submit" name="submit" value="로그인"/>
+  </form>
+  <div></div>
+{% endblock %}

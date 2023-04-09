@@ -1,0 +1,89 @@
+<!-- templates/tweet/home.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container timeline-container">
+    <div class="row">
+      <!-- 왼쪽 컬럼 -->
+      <!-- 오른 쪽 컬럼-->
+      <div class="col-md-10">
+        <!-- 글을 작성 하는 곳 -->
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="media">
+                  <div class="media-body">
+                    <h5 class="mt-0">상품 등록</h5>
+                    <p>
+                      <form method="post" action="/product-create/">
+                        {% csrf_token %}
+
+                        {{create_form.as_p}}
+                        <input type="submit" name="submit" value="등록"/>
+                      </form>
+                    </p>
+                    <hr>
+                    <h5 class="mt-1">입고 주문</h5>
+                    <p>
+                      <form method="post" action="/inbound/">
+                        {% csrf_token %}
+
+                        {{inbound_form.as_table}}
+                        <input type="submit" name="submit" value="입고"/>
+                      </form>
+                    </p>
+                    <hr>
+                    <h5 class="mt-2">출고 주문</h5>
+                    <p>
+                      <form method="post" action="/outbound/">
+                        {% csrf_token %}
+
+                        {{outbound_form.as_table}}
+                        <input type="submit" name="submit" value="출고"/>
+                      </form>
+                    </p>
+                      
+                    <hr>
+
+                  </div>
+                  <p>
+                      
+                    </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <!-- 작성 된 글이 나오는 곳 -->
+        <div class="row">
+          {% for inv in inventorys %}
+            <div class="col-md-12 mb-2">
+              <div class="card">
+                <div class="card-body">
+                  <div class="media">
+                    <div class="media-body">
+                      <h5 class="mt-0">{{ inv.product.name }}</h5>
+                      <p>의류코드:{{inv.product.code}}</p>
+                      <p>설명: {{inv.product.description}}</p>
+                      <p>가격: {{inv.product.price}} 메소</p>
+                      <p>사이즈: {{inv.product.size}}</p>
+                    </div>
+                    <div style="text-align: right">
+                    <h3 style="font-size: Big"> 재고: {{inv.stock_count }}</h3>
+                      <span style="font-size: small">등록일:{{inv.created_at}}</span><br>
+                      <span style="font-size: small">최신수량변경: {{inv.updated_at}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+{% endblock %}
